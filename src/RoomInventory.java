@@ -4,6 +4,9 @@ import java.util.Map;
 public class RoomInventory {
 
     private Map<String, Integer> inventory;
+    public void incrementRoom(String roomType) {
+        inventory.put(roomType, inventory.getOrDefault(roomType, 0) + 1);
+    }
 
     public RoomInventory() {
         inventory = new HashMap<>();
