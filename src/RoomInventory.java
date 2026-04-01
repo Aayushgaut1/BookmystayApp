@@ -1,57 +1,26 @@
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * =========================================================
- * CLASS - RoomInventory
- * =========================================================
- *
- * Use Case 3: Centralized Room Inventory Management
- *
- * This class acts as the single source of truth
- * for room availability in the hotel.
- *
- * @version 3.1
- */
 public class RoomInventory {
 
-    /**
-     * Stores available room count for each room type
-     *
-     * Key   -> Room type name
-     * Value -> Available room count
-     */
-    private Map<String, Integer> roomAvailability;
+    private Map<String, Integer> inventory;
 
-    /**
-     * Constructor initializes the inventory
-     * with default availability values
-     */
     public RoomInventory() {
-        roomAvailability = new HashMap<>();
-        initializeInventory();
+        inventory = new HashMap<>();
+        inventory.put("Single", 2);
+        inventory.put("Double", 2);
+        inventory.put("Suite", 1);
     }
 
-    /**
-     * Initializes room availability data
-     */
-    private void initializeInventory() {
-        roomAvailability.put("Single", 5);
-        roomAvailability.put("Double", 3);
-        roomAvailability.put("Suite", 2);
+    public boolean isAvailable(String roomType) {
+        return inventory.getOrDefault(roomType, 0) > 0;
     }
 
-    /**
-     * Returns the current availability map
-     */
-    public Map<String, Integer> getRoomAvailability() {
-        return roomAvailability;
+    public void decrementRoom(String roomType) {
+        inventory.put(roomType, inventory.get(roomType) - 1);
     }
 
-    /**
-     * Updates availability for a specific room type
-     */
-    public void updateAvailability(String roomType, int count) {
-        roomAvailability.put(roomType, count);
+    public int getAvailableRooms(String roomType) {
+        return inventory.getOrDefault(roomType, 0);
     }
 }
