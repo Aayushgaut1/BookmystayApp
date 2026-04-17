@@ -1,0 +1,29 @@
+public class UseCase12DataPersistenceRecovery {
+
+    public static void main(String[] args) {
+
+        String filePath = "inventory.txt";
+
+        RoomInventory inventory = new RoomInventory();
+        FilePersistenceService persistenceService = new FilePersistenceService();
+
+        // Step 1: Load existing data (Recovery)
+        persistenceService.loadInventory(inventory, filePath);
+
+        // Step 2: If empty, initialize fresh data
+        if (inventory.getAllRooms().isEmpty()) {
+            inventory.setRoomCount("Single", 5);
+            inventory.setRoomCount("Double", 3);
+            inventory.setRoomCount("Suite", 2);
+        }
+
+        // Step 3: Display current inventory
+        System.out.println("\nCurrent Inventory:");
+        inventory.getAllRooms().forEach((type, count) ->
+                System.out.println(type + ": " + count)
+        );
+
+        // Step 4: Save state before shutdown
+        persistenceService.saveInventory(inventory, filePath);
+    }
+}
